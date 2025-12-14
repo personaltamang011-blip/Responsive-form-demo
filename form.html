@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Responsive Form</title>
+  <style>
+    /* ====== RESET ====== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+      transition: background 0.3s;
+    }
+
+    /* ====== FORM CONTAINER ====== */
+    .form-container {
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .form-container h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    /* ====== FORM FIELDS ====== */
+    .form-group {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+      outline: none;
+      background: transparent;
+      transition: border-color 0.3s;
+    }
+
+    .form-group label {
+      position: absolute;
+      top: 50%;
+      left: 12px;
+      transform: translateY(-50%);
+      color: #666;
+      font-size: 16px;
+      pointer-events: none;
+      transition: 0.3s ease all;
+      background-color: #fff;
+      padding: 0 5px;
+    }
+
+    .form-group input:focus {
+      border-color: #0078d7;
+    }
+
+    .form-group input:focus+label,
+    .form-group input:not(:placeholder-shown)+label {
+      top: 0;
+      font-size: 13px;
+      color: #0078d7;
+    }
+
+    /* ====== BUTTON ====== */
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #0078d7;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #005fa3;
+    }
+
+    /* ====== RESPONSIVE ====== */
+    @media (max-width: 480px) {
+      .form-container {
+        padding: 25px 20px;
+      }
+    }
+
+    /* ====== DARK MODE ====== */
+    body.dark {
+      background: linear-gradient(135deg, #232526, #414345);
+    }
+
+    body.dark .form-container {
+      background: #2c2c2c;
+      color: #f5f5f5;
+    }
+
+    body.dark .form-group input {
+      border: 1px solid #555;
+      color: #fff;
+    }
+
+    body.dark .form-group label {
+      color: #bbb;
+      background: #2c2c2c;
+    }
+
+    body.dark button {
+      background: #ff9800;
+      color: #000;
+    }
+
+    .toggle-mode {
+      margin-top: 15px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 14px;
+      color: #0078d7;
+    }
+
+    body.dark .toggle-mode {
+      color: #ff9800;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="form-container">
+    <h2>Responsive Form</h2>
+    <form method="post"
+      action="https://script.google.com/macros/s/AKfycbxjoTZMaxtqgITeTnktuODWfUFXgchfytszx2x19PhKkhA21IuRyKfFk2Pd_UZ6hb_c/exec"
+      name="contact-form">
+      <div class="form-group">
+        <input type="text" name="your-name" placeholder="NAME">
+        <label for="name">Name</label>
+      </div>
+
+      <div class="form-group">
+        <input type="number" name="your-price" placeholder="PRICE">
+        <label for="number">Price</label>
+      </div>
+
+      <div class="form-group">
+        <input type="number" name="your-qty" placeholder="QTY">
+        <label for="number">Qty</label>
+      </div>
+
+      <button type="submit" value="Submit" id="submit">Submit</button>
+    </form>
+
+    <div class="toggle-mode" id="toggleMode">🌙 Switch to Dark Mode</div>
+  </div>
+
+  <script>
+    // ====== FORM VALIDATION ======
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxjoTZMaxtqgITeTnktuODWfUFXgchfytszx2x19PhKkhA21IuRyKfFk2Pd_UZ6hb_c/exec'
+
+    const form = document.forms['contact-form']
+
+    form.addEventListener('submit', e => {
+      e.preventDefault()
+      fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+        .then(response => alert("Thank you! your form is submitted successfully."))
+        .then(() => { window.location.reload(); })
+        .catch(error => console.error('Error!', error.message))
+
+    });
+
+    // ====== DARK MODE TOGGLE ======
+    const toggleBtn = document.getElementById('toggleMode');
+    toggleBtn.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      toggleBtn.textContent = document.body.classList.contains('dark')
+        ? '☀️ Switch to Light Mode'
+        : '🌙 Switch to Dark Mode';
+    });
+  </script>
+
+</body>
+
+</html>
